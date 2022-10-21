@@ -14,8 +14,6 @@ data2 = pd.read_excel(upload_file2, sheet_name='Sheet3')
 
 def cheking_2(df,df_validasi_stock_ideal,df_validasi_artikel_ideal):
     # clean data format
-    toko = df.loc[1][2]
-    df = df.loc[5:][:]
     df = df.rename(columns={df.columns[0]: "Drop1",
                             df.columns[1]: "Artikel ID",
                             df.columns[2]: "Drop2",
@@ -53,17 +51,16 @@ def cheking_2(df,df_validasi_stock_ideal,df_validasi_artikel_ideal):
                             df.columns[34]: "Harga Jual",
                             df.columns[35]: "Jenis",
                             df.columns[36]: "Status",
-                            df.columns[37]: "Tipe Produk",})
-    df = df.drop(columns=['Drop1', 'Drop2', 'Drop3', 'Drop4', 'Drop5', 'Drop6'])
-    df['TOKO'] = toko
+                            df.columns[37]: "Tipe Produk",
+                            df.columns[38]: "TOKO",})
 
-    # start cleaning data stock
+    df = df.drop(columns=['Drop1', 'Drop2', 'Drop3', 'Drop4', 'Drop5', 'Drop6'])
+    df = df.dropna(subset=['Artikel ID'])
     df['artikel jenis'] = df['Artikel ID'].str[:2]
     df['ukuran'] = df['Artikel ID'].str[8:]
     df['warna'] = df['Artikel ID'].str[7:8]
     df['ARTIKEL'] = df['Artikel ID'].str[:8]
     df['KATEGORI PRODUK'] = df['artikel jenis'].replace(['12','15','22','35','44','45','46','47','51','52','53','54','55','56','57','58','59'],['T-Shirt S/S','T-Shirt L/S','Wangky','Kemeja L/S','Jacket','Jacket','Jacket','Jacket','Celana','Celana','Celana','Celana','Celana','Celana','Celana','Celana','Celana'])
-    df = df.dropna(subset=['Artikel ID'])
 # finish cleaning data stock
 
 
